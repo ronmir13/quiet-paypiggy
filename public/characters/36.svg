@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 300">
+<defs>
+<radialGradient id="bg"><stop stop-color="#ec2694" stop-opacity=".5"/><stop offset=".55" stop-color="#1b0b28"/><stop offset="1" stop-color="#07040d"/></radialGradient>
+<linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffd2ef"/><stop offset=".52" stop-color="#ec2694"/><stop offset="1" stop-color="#ff5a9f"/></linearGradient>
+</defs>
+<rect width="260" height="300" rx="28" fill="url(#bg)"/>
+<path d="M15 220H55L68 195L84 245L100 215H150L166 195L182 235L196 215H245" fill="none" stroke="#ffd2ef" stroke-width="4" opacity=".3"/>
+<ellipse cx="130" cy="151" rx="86" ry="88" fill="none" stroke="#ffd2ef" stroke-opacity=".10" stroke-width="2"/>
+<path d="M68 58 Q130 16 192 58" fill="none" stroke="#ffd2ef" stroke-width="9"/><path d="M83 75 Q130 45 177 75" fill="none" stroke="#ffd2ef" stroke-width="3"/>
+<path d="M72 113 Q48 84 61 62 Q83 70 96 103Z" fill="#ec2694" stroke="#29162f" stroke-width="6"/>
+<path d="M188 113 Q212 84 199 62 Q177 70 164 103Z" fill="#ec2694" stroke="#29162f" stroke-width="6"/>
+<ellipse cx="130" cy="143" rx="72" ry="70" fill="url(#skin)" stroke="#29162f" stroke-width="7"/>
+<circle cx="104" cy="128" r="9" fill="#140a17"/><circle cx="156" cy="128" r="9" fill="#140a17"/>
+<circle cx="105" cy="123" r="3" fill="#fff"/><circle cx="160" cy="123" r="3" fill="#fff"/>
+<ellipse cx="130" cy="169" rx="39" ry="27" fill="#ffd2ef" stroke="#29162f" stroke-width="5"/>
+<ellipse cx="116" cy="166" rx="7" ry="9" fill="#3a1c2e"/><ellipse cx="144" cy="166" rx="7" ry="9" fill="#3a1c2e"/>
+<path d="M116 184 Q130 193 144 184" fill="none" stroke="#29162f" stroke-width="4" stroke-linecap="round"/>
+<path d="M64 216 Q130 190 196 216 L214 300 L46 300Z" fill="#ec2694" stroke="#ffd2ef" stroke-width="7"/><path d="M76 229 L112 252 L130 220 L148 252 L184 229" fill="none" stroke="#ffd2ef" stroke-width="5"/>
+<text x="130" y="283" text-anchor="middle" fill="#ffd2ef" font-family="Arial,sans-serif" font-size="8" font-weight="700" letter-spacing="1.7">#36 · NEON</text>
+</svg>

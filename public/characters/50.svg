@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 300">
+<defs>
+<radialGradient id="bg"><stop stop-color="#b57f2e" stop-opacity=".5"/><stop offset=".55" stop-color="#1b0b28"/><stop offset="1" stop-color="#07040d"/></radialGradient>
+<linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff1ae"/><stop offset=".52" stop-color="#b57f2e"/><stop offset="1" stop-color="#ff5a9f"/></linearGradient>
+</defs>
+<rect width="260" height="300" rx="28" fill="url(#bg)"/>
+<circle cx="130" cy="150" r="98" fill="none" stroke="#fff1ae" stroke-opacity=".22" stroke-width="3"/><circle cx="130" cy="150" r="68" fill="none" stroke="#b57f2e" stroke-opacity=".25" stroke-width="3"/><path d="M32 150H228M130 52V248" stroke="#fff1ae" stroke-opacity=".18" stroke-width="2"/>
+<ellipse cx="130" cy="151" rx="94" ry="90" fill="none" stroke="#fff1ae" stroke-opacity=".10" stroke-width="2"/>
+<path d="M70 73 L84 32 L111 57 L130 20 L149 57 L178 32 L190 73Z" fill="#fff1ae" stroke="#b57f2e" stroke-width="6"/>
+<path d="M72 113 Q48 84 61 62 Q83 70 96 103Z" fill="#b57f2e" stroke="#29162f" stroke-width="6"/>
+<path d="M188 113 Q212 84 199 62 Q177 70 164 103Z" fill="#b57f2e" stroke="#29162f" stroke-width="6"/>
+<ellipse cx="130" cy="143" rx="80" ry="72" fill="url(#skin)" stroke="#29162f" stroke-width="7"/>
+<ellipse cx="103" cy="132" rx="10" ry="7" fill="#140a17"/><ellipse cx="157" cy="132" rx="10" ry="7" fill="#140a17"/>
+<circle cx="105" cy="127" r="3" fill="#fff"/><circle cx="160" cy="127" r="3" fill="#fff"/>
+<ellipse cx="130" cy="169" rx="39" ry="27" fill="#fff1ae" stroke="#29162f" stroke-width="5"/>
+<ellipse cx="116" cy="166" rx="7" ry="9" fill="#3a1c2e"/><ellipse cx="144" cy="166" rx="7" ry="9" fill="#3a1c2e"/>
+<path d="M116 184 Q130 193 144 184" fill="none" stroke="#29162f" stroke-width="4" stroke-linecap="round"/>
+<path d="M58 210 Q130 180 202 210 L220 300 L40 300Z" fill="#b57f2e" stroke="#fff1ae" stroke-width="8"/><path d="M130 204V300M72 236H188M62 265H198" stroke="#fff1ae" stroke-width="5"/>
+<text x="130" y="283" text-anchor="middle" fill="#fff1ae" font-family="Arial,sans-serif" font-size="8" font-weight="700" letter-spacing="1.7">#50 · ULTIMATE</text>
+</svg>

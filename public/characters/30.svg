@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 300">
+<defs>
+<radialGradient id="bg"><stop stop-color="#866532" stop-opacity=".5"/><stop offset=".55" stop-color="#1b0b28"/><stop offset="1" stop-color="#07040d"/></radialGradient>
+<linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe3a0"/><stop offset=".52" stop-color="#866532"/><stop offset="1" stop-color="#ff5a9f"/></linearGradient>
+</defs>
+<rect width="260" height="300" rx="28" fill="url(#bg)"/>
+<path d="M204 238L235 207" stroke="#ffe3a0" stroke-width="8" opacity=".35"/><circle cx="202" cy="240" r="10" fill="none" stroke="#ffe3a0" stroke-width="4" opacity=".35"/>
+<ellipse cx="130" cy="151" rx="98" ry="92" fill="none" stroke="#ffe3a0" stroke-opacity=".10" stroke-width="2"/>
+<rect x="78" y="61" width="46" height="27" rx="10" fill="#182027" stroke="#ffe3a0" stroke-width="5"/><rect x="136" y="61" width="46" height="27" rx="10" fill="#182027" stroke="#ffe3a0" stroke-width="5"/><path d="M124 73H136" stroke="#ffe3a0" stroke-width="4"/>
+<path d="M72 113 Q48 84 61 62 Q83 70 96 103Z" fill="#866532" stroke="#29162f" stroke-width="6"/>
+<path d="M188 113 Q212 84 199 62 Q177 70 164 103Z" fill="#866532" stroke="#29162f" stroke-width="6"/>
+<ellipse cx="130" cy="143" rx="84" ry="74" fill="url(#skin)" stroke="#29162f" stroke-width="7"/>
+<circle cx="104" cy="132" r="9" fill="#140a17"/><circle cx="156" cy="132" r="9" fill="#140a17"/>
+<circle cx="105" cy="127" r="3" fill="#fff"/><circle cx="160" cy="127" r="3" fill="#fff"/>
+<ellipse cx="130" cy="169" rx="39" ry="27" fill="#ffe3a0" stroke="#29162f" stroke-width="5"/>
+<ellipse cx="116" cy="166" rx="7" ry="9" fill="#3a1c2e"/><ellipse cx="144" cy="166" rx="7" ry="9" fill="#3a1c2e"/>
+<path d="M116 184 Q130 193 144 184" fill="none" stroke="#29162f" stroke-width="4" stroke-linecap="round"/>
+<path d="M62 218 Q130 190 198 218 L214 300 L46 300Z" fill="#866532" stroke="#ffe3a0" stroke-width="6"/><path d="M92 220V300M168 220V300" stroke="#ffe3a0" stroke-width="4"/>
+<text x="130" y="283" text-anchor="middle" fill="#ffe3a0" font-family="Arial,sans-serif" font-size="8" font-weight="700" letter-spacing="1.7">#30 · INVENTOR</text>
+</svg>

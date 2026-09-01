@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 300">
+<defs>
+<radialGradient id="bg"><stop stop-color="#542b70" stop-opacity=".5"/><stop offset=".55" stop-color="#1b0b28"/><stop offset="1" stop-color="#07040d"/></radialGradient>
+<linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d8a4ff"/><stop offset=".52" stop-color="#542b70"/><stop offset="1" stop-color="#ff5a9f"/></linearGradient>
+</defs>
+<rect width="260" height="300" rx="28" fill="url(#bg)"/>
+<circle cx="205" cy="55" r="22" fill="#d8a4ff" opacity=".18"/><circle cx="214" cy="48" r="22" fill="#100719"/>
+<ellipse cx="130" cy="151" rx="103" ry="86" fill="none" stroke="#d8a4ff" stroke-opacity=".10" stroke-width="2"/>
+<path d="M72 71 Q130 43 188 71 Q171 110 130 110 Q89 110 72 71Z" fill="#111018" stroke="#d8a4ff" stroke-width="5"/><circle cx="106" cy="78" r="7" fill="#d8a4ff"/><circle cx="154" cy="78" r="7" fill="#d8a4ff"/>
+<path d="M72 113 Q48 84 61 62 Q83 70 96 103Z" fill="#542b70" stroke="#29162f" stroke-width="6"/>
+<path d="M188 113 Q212 84 199 62 Q177 70 164 103Z" fill="#542b70" stroke="#29162f" stroke-width="6"/>
+<ellipse cx="130" cy="143" rx="89" ry="68" fill="url(#skin)" stroke="#29162f" stroke-width="7"/>
+<ellipse cx="103" cy="130" rx="10" ry="7" fill="#140a17"/><ellipse cx="157" cy="130" rx="10" ry="7" fill="#140a17"/>
+<circle cx="105" cy="125" r="3" fill="#fff"/><circle cx="160" cy="125" r="3" fill="#fff"/>
+<ellipse cx="130" cy="169" rx="39" ry="27" fill="#d8a4ff" stroke="#29162f" stroke-width="5"/>
+<ellipse cx="116" cy="166" rx="7" ry="9" fill="#3a1c2e"/><ellipse cx="144" cy="166" rx="7" ry="9" fill="#3a1c2e"/>
+<path d="M116 184 Q130 193 144 184" fill="none" stroke="#29162f" stroke-width="4" stroke-linecap="round"/>
+<path d="M54 215 Q130 178 206 215 L230 300 L30 300Z" fill="#542b70" stroke="#d8a4ff" stroke-width="6"/><path d="M91 212 Q130 235 169 212" fill="none" stroke="#d8a4ff" stroke-width="5"/>
+<text x="130" y="283" text-anchor="middle" fill="#d8a4ff" font-family="Arial,sans-serif" font-size="8" font-weight="700" letter-spacing="1.7">#05 · SHADOW</text>
+</svg>

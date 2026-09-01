@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 300">
+<defs>
+<radialGradient id="bg"><stop stop-color="#9e7520" stop-opacity=".5"/><stop offset=".55" stop-color="#1b0b28"/><stop offset="1" stop-color="#07040d"/></radialGradient>
+<linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0aa"/><stop offset=".52" stop-color="#9e7520"/><stop offset="1" stop-color="#ff5a9f"/></linearGradient>
+</defs>
+<rect width="260" height="300" rx="28" fill="url(#bg)"/>
+<rect x="202" y="208" width="25" height="38" rx="3" fill="#fff0aa" opacity=".25" transform="rotate(10 202 208)"/><rect x="214" y="203" width="25" height="38" rx="3" fill="#fff" opacity=".2" transform="rotate(-7 214 203)"/>
+<ellipse cx="130" cy="151" rx="98" ry="80" fill="none" stroke="#fff0aa" stroke-opacity=".10" stroke-width="2"/>
+<path d="M70 73 L84 32 L111 57 L130 20 L149 57 L178 32 L190 73Z" fill="#fff0aa" stroke="#9e7520" stroke-width="6"/>
+<path d="M72 113 Q48 84 61 62 Q83 70 96 103Z" fill="#9e7520" stroke="#29162f" stroke-width="6"/>
+<path d="M188 113 Q212 84 199 62 Q177 70 164 103Z" fill="#9e7520" stroke="#29162f" stroke-width="6"/>
+<ellipse cx="130" cy="143" rx="84" ry="62" fill="url(#skin)" stroke="#29162f" stroke-width="7"/>
+<circle cx="104" cy="128" r="9" fill="#140a17"/><circle cx="156" cy="128" r="9" fill="#140a17"/>
+<circle cx="105" cy="123" r="3" fill="#fff"/><circle cx="160" cy="123" r="3" fill="#fff"/>
+<ellipse cx="130" cy="169" rx="39" ry="27" fill="#fff0aa" stroke="#29162f" stroke-width="5"/>
+<ellipse cx="116" cy="166" rx="7" ry="9" fill="#3a1c2e"/><ellipse cx="144" cy="166" rx="7" ry="9" fill="#3a1c2e"/>
+<path d="M116 184 Q130 193 144 184" fill="none" stroke="#29162f" stroke-width="4" stroke-linecap="round"/>
+<path d="M76 214 L130 232 L184 214 L196 300 L64 300Z" fill="#9e7520" stroke="#fff0aa" stroke-width="6"/><path d="M130 232V300" stroke="#fff0aa" stroke-width="4"/><circle cx="130" cy="252" r="5" fill="#fff0aa"/>
+<text x="130" y="283" text-anchor="middle" fill="#fff0aa" font-family="Arial,sans-serif" font-size="8" font-weight="700" letter-spacing="1.7">#48 · CASINO KING</text>
+</svg>
