@@ -1,24 +1,45 @@
 "use client";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { characters } from "../data/characters";
 import { collectorCards } from "../data/collector";
 
 const filters = ["ALL","COMMON","RARE","EPIC","LEGENDARY","MYTHIC"];
+const STORAGE_KEY = "quiet-paypiggy:collection:v1";
 
 export default function Cards() {
   const [filter,setFilter] = useState("ALL");
   const [showOwned,setShowOwned] = useState(false);
   const [selected,setSelected] = useState<number | null>(null);
+  const [ownedIds,setOwnedIds] = useState<number[]>(() => collectorCards.filter(c => c.status === "OWNED").map(c => c.id));
 
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) setOwnedIds(parsed.filter((id): id is number => Number.isInteger(id)));
+      }
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(ownedIds)); } catch {}
+  }, [ownedIds]);
+
+  const isOwned = (id:number) => ownedIds.includes(id);
   const visible = useMemo(() => collectorCards.filter(c =>
     (filter==="ALL" || c.rarity===filter) &&
-    (!showOwned || c.status==="OWNED")
-  ),[filter,showOwned]);
+    (!showOwned || isOwned(c.id))
+  ),[filter,showOwned,ownedIds]);
 
   const selectedCard = selected ? collectorCards.find(c=>c.id===selected) : null;
   const selectedCharacter = selectedCard ? characters.find(c=>c.id===selectedCard.id) : null;
-  const owned = collectorCards.filter(c=>c.status==="OWNED").length;
+  const owned = ownedIds.length;
+
+  function toggleCollection(id:number) {
+    setOwnedIds(current => current.includes(id) ? current.filter(x => x !== id) : [...current, id].sort((a,b) => a-b));
+  }
 
   return <main>
     <header className="nav shell">
@@ -48,9 +69,10 @@ export default function Cards() {
       <div className="card-grid">
         {visible.map(c=>{
           const ch=characters.find(x=>x.id===c.id)!;
-          return <button className={`collector-card ${c.rarity.toLowerCase()} ${c.status.toLowerCase()}`} key={c.id} onClick={()=>setSelected(c.id)}>
-            <div className="card-art"><img src={`/characters/${c.id}.svg`} alt=""/><span>#{ch.number}</span>{c.status==="LOCKED"&&<b className="lock-badge">LOCKED</b>}</div>
-            <div className="card-body"><small>{c.rarity} · {c.edition}</small><h3>{ch.name}</h3><p>{ch.realm} · {c.serial}</p><strong>{c.status==="OWNED"?"OWNED":"INSPECT CARD →"}</strong></div>
+          const status = isOwned(c.id) ? "OWNED" : "LOCKED";
+          return <button className={`collector-card ${c.rarity.toLowerCase()} ${status.toLowerCase()}`} key={c.id} onClick={()=>setSelected(c.id)}>
+            <div className="card-art"><img src={`/characters/${c.id}.svg`} alt=""/><span>#{ch.number}</span>{status==="LOCKED"&&<b className="lock-badge">LOCKED</b>}</div>
+            <div className="card-body"><small>{c.rarity} · {c.edition}</small><h3>{ch.name}</h3><p>{ch.realm} · {c.serial}</p><strong>{status==="OWNED"?"OWNED":"INSPECT CARD →"}</strong></div>
           </button>
         })}
       </div>
@@ -64,8 +86,11 @@ export default function Cards() {
           <span className="canon-badge">{selectedCard.rarity} · {selectedCard.edition}</span>
           <h2>#{selectedCharacter.number} {selectedCharacter.name}</h2>
           <p>{selectedCharacter.tagline}</p>
-          <div className="modal-stats"><span><small>STATUS</small><b>{selectedCard.status}</b></span><span><small>SERIAL</small><b>{selectedCard.serial}</b></span><span><small>REALM</small><b>{selectedCharacter.realm}</b></span></div>
-          <Link className="btn primary" href={`/characters/${selectedCard.id}`}>Open full profile →</Link>
+          <div className="modal-stats"><span><small>STATUS</small><b>{isOwned(selectedCard.id)?"OWNED":"LOCKED"}</b></span><span><small>SERIAL</small><b>{selectedCard.serial}</b></span><span><small>REALM</small><b>{selectedCharacter.realm}</b></span></div>
+          <div className="profile-actions">
+            <button className="btn primary" onClick={()=>toggleCollection(selectedCard.id)}>{isOwned(selectedCard.id)?"Remove from collection":"Collect this card"}</button>
+            <Link className="btn" href={`/characters/${selectedCard.id}`}>Open full profile →</Link>
+          </div>
         </div>
       </div>
     </div>}
