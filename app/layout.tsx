@@ -30,7 +30,7 @@ function SiteFooter() {
         <div className="footer-links">
           <div><span>EXPLORE</span><Link href="/characters">Characters</Link><Link href="/cards">Vault</Link></div>
           <div><span>UNIVERSE</span><Link href="/lore">Lore</Link><Link href="/shop">Shop</Link></div>
-          <div><span>BRAND</span><Link href="/">Home</Link><Link href="/characters/50">The Ultimate</Link></div>
+          <div><span>BRAND</span><Link href="/">Home</Link><Link href="/characters/50">The Ultimate</Link><Link href="/account">Account</Link></div>
         </div>
       </div>
       <div className="shell footer-bottom">
