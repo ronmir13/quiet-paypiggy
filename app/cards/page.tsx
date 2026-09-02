@@ -27,6 +27,13 @@ export default function Cards() {
     try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(ownedIds)); } catch {}
   }, [ownedIds]);
 
+  useEffect(() => {
+    const requested = Number(new URLSearchParams(window.location.search).get("card"));
+    if (Number.isInteger(requested) && collectorCards.some(c => c.id === requested)) {
+      setSelected(requested);
+    }
+  }, []);
+
   const isOwned = (id:number) => ownedIds.includes(id);
   const visible = useMemo(() => collectorCards.filter(c =>
     (filter==="ALL" || c.rarity===filter) &&
