@@ -127,6 +127,15 @@ export default function AccountPage() {
     return "INITIATE";
   }, [stats.owned]);
 
+  const milestones = [
+    { label: "FIRST FORM", target: 1 },
+    { label: "COLLECTOR", target: 5 },
+    { label: "FORM HUNTER", target: 10 },
+    { label: "VAULT KEEPER", target: 25 },
+    { label: "MYTHIC SEEKER", target: 40 },
+    { label: "ULTIMATE", target: 50 },
+  ];
+
   if (loading) {
     return (
       <main className="shell page-section">
@@ -186,6 +195,27 @@ export default function AccountPage() {
                     <strong style={{ fontSize: 24 }}>{stats.rarity[rarity]}</strong>
                   </div>
                 ))}
+              </div>
+            </div>
+
+            <div style={{ marginTop: 32 }}>
+              <p className="eyebrow">COLLECTOR MILESTONES</p>
+              <div style={{ display: "grid", gap: 10, marginTop: 12 }}>
+                {milestones.map((milestone, index) => {
+                  const unlocked = stats.owned >= milestone.target;
+                  const previousTarget = index === 0 ? 0 : milestones[index - 1].target;
+                  const range = milestone.target - previousTarget;
+                  const progress = unlocked ? 100 : Math.max(0, Math.min(100, ((stats.owned - previousTarget) / range) * 100));
+                  return (
+                    <div key={milestone.target} className="panel" style={{ display: "grid", gap: 8 }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+                        <strong>{unlocked ? "✓" : "○"} {milestone.label}</strong>
+                        <span className="muted">{Math.min(stats.owned, milestone.target)}/{milestone.target}</span>
+                      </div>
+                      <div className="meter-track"><i style={{ width: `${progress}%` }} /></div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
