@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { products } from "@/app/data/products";
+import { products } from "../../data/products";
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 
