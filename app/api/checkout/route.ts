@@ -15,6 +15,18 @@ type CheckoutItem = {
   quantity: number;
 };
 
+function getAppOrigin() {
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
+  }
+
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  return "http://localhost:3000";
+}
+
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as { items?: CheckoutItem[] };
@@ -51,7 +63,7 @@ export async function POST(request: Request) {
       };
     });
 
-    const origin = request.headers.get("origin") ?? "http://localhost:3000";
+    const origin = getAppOrigin();
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
