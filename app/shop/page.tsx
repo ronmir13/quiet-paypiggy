@@ -13,6 +13,8 @@ export default function Shop() {
   const [bag, setBag] = useState<Bag>({});
   const [open, setOpen] = useState(false);
   const [ready, setReady] = useState(false);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
 
   useEffect(() => {
     try {
@@ -46,6 +48,7 @@ export default function Shop() {
   function add(id: string) {
     setBag(current => ({ ...current, [id]: (current[id] ?? 0) + 1 }));
     setOpen(true);
+    setCheckoutError("");
   }
 
   function remove(id: string) {
@@ -66,6 +69,37 @@ export default function Shop() {
       }
       return { ...current, [id]: quantity - 1 };
     });
+  }
+
+  async function checkout() {
+    if (bagItems.length === 0 || checkoutLoading) return;
+
+    setCheckoutLoading(true);
+    setCheckoutError("");
+
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: bagItems.map(({ product, quantity }) => ({
+            id: product.id,
+            quantity,
+          })),
+        }),
+      });
+
+      const data = (await response.json()) as { url?: string; error?: string };
+
+      if (!response.ok || !data.url) {
+        throw new Error(data.error || "Unable to start checkout.");
+      }
+
+      window.location.href = data.url;
+    } catch (error) {
+      setCheckoutLoading(false);
+      setCheckoutError(error instanceof Error ? error.message : "Unable to start checkout.");
+    }
   }
 
   return <main>
@@ -97,7 +131,7 @@ export default function Shop() {
       </div>
     </section>
 
-    <section className="shell shop-note"><div className="eyebrow">COLLECTOR PROMISE</div><h2>Every purchase should feel like opening a <em>piece of canon.</em></h2><p>V20 turns the storefront bag into a persistent cart foundation. Checkout and payment processing can be connected later without changing the cart architecture.</p></section>
+    <section className="shell shop-note"><div className="eyebrow">COLLECTOR PROMISE</div><h2>Every purchase should feel like opening a <em>piece of canon.</em></h2><p>V23 connects the persistent storefront bag to secure Stripe Checkout. Payment processing runs through the server-side checkout route.</p></section>
 
     {open && <div className="bag-backdrop" onClick={() => setOpen(false)}>
       <aside className="bag-panel" onClick={e => e.stopPropagation()}>
@@ -110,8 +144,11 @@ export default function Shop() {
             <button className="bag-remove" onClick={() => remove(product.id)}>REMOVE</button>
           </div>)}</div>}
         <div className="bag-total"><span>TOTAL</span><b>${total}</b></div>
-        <button className="btn primary bag-checkout" disabled={bagItems.length === 0}>CHECKOUT →</button>
-        <small className="checkout-note">Cart foundation complete — payment processing is not connected yet.</small>
+        <button className="btn primary bag-checkout" disabled={bagItems.length === 0 || checkoutLoading} onClick={checkout}>
+          {checkoutLoading ? "OPENING CHECKOUT…" : "CHECKOUT →"}
+        </button>
+        {checkoutError && <small className="checkout-note">{checkoutError}</small>}
+        {!checkoutError && <small className="checkout-note">Secure Stripe Checkout · Test mode</small>}
       </aside>
     </div>}
   </main>;
