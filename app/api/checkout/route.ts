@@ -2,18 +2,20 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { products } from "../../data/products";
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
-
-if (!stripeSecretKey) {
-  throw new Error("Missing STRIPE_SECRET_KEY environment variable.");
-}
-
-const stripe = new Stripe(stripeSecretKey);
-
 type CheckoutItem = {
   id: string;
   quantity: number;
 };
+
+function getStripe() {
+  const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+
+  if (!stripeSecretKey) {
+    throw new Error("Missing STRIPE_SECRET_KEY environment variable.");
+  }
+
+  return new Stripe(stripeSecretKey);
+}
 
 function getAppOrigin() {
   if (process.env.NEXT_PUBLIC_SITE_URL) {
@@ -29,6 +31,7 @@ function getAppOrigin() {
 
 export async function POST(request: Request) {
   try {
+    const stripe = getStripe();
     const body = (await request.json()) as { items?: CheckoutItem[] };
 
     if (!Array.isArray(body.items) || body.items.length === 0) {
