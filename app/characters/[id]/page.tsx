@@ -47,8 +47,8 @@ export default async function CharacterProfile({ params }: { params: Promise<{ i
             <strong>{character.ability}</strong>
           </div>
           <div className="profile-actions">
-            <Link className="btn primary" href="/cards">View in Vault <span>→</span></Link>
-            <Link className="btn" href="/shop">Collect</Link>
+            <Link className="btn primary" href={`/cards?card=${character.id}`}>View in Vault <span>→</span></Link>
+            <Link className="btn" href={`/cards?card=${character.id}`}>Collect</Link>
           </div>
         </div>
       </section>
