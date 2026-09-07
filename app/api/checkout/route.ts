@@ -56,6 +56,9 @@ export async function POST(request: Request) {
           product_data: {
             name: product.name,
             description: product.description,
+            metadata: {
+              product_id: product.id,
+            },
           },
           unit_amount: Math.round(Number(product.price) * 100),
         },
