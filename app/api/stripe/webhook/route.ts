@@ -30,7 +30,10 @@ async function getOrderItems(stripe: Stripe, sessionId: string) {
 
   return lineItems.data.map((item) => {
     const product = item.price?.product;
-    const productMetadata = product && typeof product !== "string" ? product.metadata : undefined;
+    const productMetadata =
+      product && typeof product !== "string" && !product.deleted
+        ? product.metadata
+        : undefined;
 
     return {
       product_id: productMetadata?.product_id ?? item.price?.id ?? "unknown",
@@ -105,7 +108,8 @@ export async function POST(request: Request) {
         .from("orders")
         .insert({
           stripe_session_id: session.id,
-          stripe_payment_intent_id: typeof session.payment_intent === "string" ? session.payment_intent : null,
+          stripe_payment_intent_id:
+            typeof session.payment_intent === "string" ? session.payment_intent : null,
           customer_email: session.customer_details?.email ?? session.customer_email ?? null,
           amount_total: session.amount_total ?? 0,
           currency: session.currency ?? "usd",
