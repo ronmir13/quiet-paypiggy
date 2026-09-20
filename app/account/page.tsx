@@ -13,6 +13,23 @@ type CollectionStats = {
   rarity: Record<(typeof rarities)[number], number>;
 };
 
+type OrderItem = {
+  id: number;
+  product_id: string;
+  product_name: string;
+  quantity: number;
+  unit_amount: number;
+};
+
+type Order = {
+  id: string;
+  amount_total: number;
+  currency: string;
+  status: "paid" | "fulfilled" | "cancelled" | "refunded";
+  created_at: string;
+  order_items: OrderItem[];
+};
+
 const emptyStats: CollectionStats = {
   owned: 0,
   completion: 0,
@@ -33,6 +50,25 @@ function buildStats(ids: number[]): CollectionStats {
   return { owned, completion: Math.round((owned / collectorCards.length) * 100), rarity };
 }
 
+function formatOrderTotal(amount: number, currency: string) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currency.toUpperCase(),
+  }).format(amount / 100);
+}
+
+function formatOrderDate(value: string) {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date(value));
+}
+
+function orderStatusLabel(status: Order["status"]) {
+  return status.toUpperCase();
+}
+
 export default function AccountPage() {
   const [email, setEmail] = useState("");
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -40,6 +76,7 @@ export default function AccountPage() {
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
   const [stats, setStats] = useState<CollectionStats>(emptyStats);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [syncing, setSyncing] = useState(false);
 
   async function loadProfile() {
@@ -49,29 +86,45 @@ export default function AccountPage() {
     if (!session?.user) {
       setUserEmail(null);
       setStats(emptyStats);
+      setOrders([]);
       setSyncing(false);
       return;
     }
 
     setUserEmail(session.user.email ?? null);
-    const { data, error } = await supabase
-      .from("collections")
-      .select("card_id")
-      .eq("user_id", session.user.id)
-      .order("card_id");
 
-    if (error) {
-      console.error("Collector profile load failed", error);
+    const [{ data: collectionData, error: collectionError }, { data: orderData, error: orderError }] =
+      await Promise.all([
+        supabase
+          .from("collections")
+          .select("card_id")
+          .eq("user_id", session.user.id)
+          .order("card_id"),
+        supabase
+          .from("orders")
+          .select("id, amount_total, currency, status, created_at, order_items(id, product_id, product_name, quantity, unit_amount)")
+          .order("created_at", { ascending: false }),
+      ]);
+
+    if (collectionError) {
+      console.error("Collector profile load failed", collectionError);
       setMessage("Your account is connected, but collection stats could not be loaded.");
-      setSyncing(false);
-      return;
+    } else {
+      const ids = (collectionData ?? [])
+        .map((row) => row.card_id)
+        .filter((id): id is number => Number.isInteger(id));
+
+      setStats(buildStats(ids));
     }
 
-    const ids = (data ?? [])
-      .map((row) => row.card_id)
-      .filter((id): id is number => Number.isInteger(id));
+    if (orderError) {
+      console.error("Order history load failed", orderError);
+      setMessage("Your collection is synced, but order history could not be loaded.");
+      setOrders([]);
+    } else {
+      setOrders((orderData ?? []) as Order[]);
+    }
 
-    setStats(buildStats(ids));
     setSyncing(false);
   }
 
@@ -89,7 +142,10 @@ export default function AccountPage() {
       if (!mounted) return;
       setUserEmail(session?.user.email ?? null);
       if (session?.user) loadProfile();
-      else setStats(emptyStats);
+      else {
+        setStats(emptyStats);
+        setOrders([]);
+      }
     });
 
     return () => {
@@ -217,6 +273,48 @@ export default function AccountPage() {
                   );
                 })}
               </div>
+            </div>
+
+            <div style={{ marginTop: 32 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", gap: 16, alignItems: "baseline", flexWrap: "wrap" }}>
+                <div>
+                  <p className="eyebrow">ORDER HISTORY</p>
+                  <h2 style={{ marginBottom: 6 }}>YOUR ORDERS.</h2>
+                  <p className="muted">Purchases connected to your collector account.</p>
+                </div>
+                <Link className="btn" href="/shop">Continue shopping →</Link>
+              </div>
+
+              {orders.length === 0 ? (
+                <div className="panel" style={{ marginTop: 16 }}>
+                  <p className="eyebrow">NO ORDERS YET</p>
+                  <p className="muted">Your completed Quiet PayPiggy™ purchases will appear here.</p>
+                </div>
+              ) : (
+                <div style={{ display: "grid", gap: 12, marginTop: 16 }}>
+                  {orders.map((order) => {
+                    const itemCount = order.order_items.reduce((total, item) => total + item.quantity, 0);
+                    return (
+                      <div key={order.id} className="panel" style={{ display: "grid", gap: 14 }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", gap: 16, alignItems: "flex-start", flexWrap: "wrap" }}>
+                          <div>
+                            <p className="eyebrow">ORDER #{order.id.slice(0, 8).toUpperCase()}</p>
+                            <strong>{formatOrderDate(order.created_at)}</strong>
+                          </div>
+                          <div style={{ textAlign: "right" }}>
+                            <p className="eyebrow">STATUS</p>
+                            <strong>{orderStatusLabel(order.status)}</strong>
+                          </div>
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "space-between", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
+                          <span className="muted">{itemCount} {itemCount === 1 ? "item" : "items"}</span>
+                          <strong style={{ fontSize: 20 }}>{formatOrderTotal(order.amount_total, order.currency)}</strong>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
             {message && <p className="muted" style={{ marginTop: 20 }}>{message}</p>}
